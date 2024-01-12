@@ -4,25 +4,11 @@ import { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import PropTypes from 'prop-types';
 
-//useEffect garantit que fetchUserActivityData est appelé après le rendu initial du composant
-//et les données seront mises à jour lorsque la requête asynchrone sera résolue.
 export function fetchAverageSessions() {
   const [searchParams] = useSearchParams();
   const userId = parseInt(searchParams.get('user') || 12, 10); //If no user ID is specified, default to 12. 10: base 10 system
 
   const [averageSessionsData, setaverageSessionsData] = useState(null);
-
-  // useEffect(() => {
-  //   const fetchAverageSessionsData = async () => {
-  //     try {
-  //       const user = await getAverageSessions(userId);
-  //       setaverageSessionsData(user);
-  //     } catch (error) {
-  //       console.error('Error fetching user data:', error);
-  //     }
-  //   };
-  //   fetchAverageSessionsData();
-  // }, [userId]);
 
   const fetchAverageSessionsData = async () => {
     try {

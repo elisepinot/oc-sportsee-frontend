@@ -56,7 +56,6 @@ function Diagram() {
     const customStyle = {
       fontSize: 12, // Ajoutez ici d'autres propriétés de style personnalisées
     };
-
     return (
       <Text
         {...rest}

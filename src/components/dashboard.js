@@ -7,7 +7,7 @@ import caloriesIcon from '../assets/calories-icon.svg';
 import proteinsIcon from '../assets/protein-icon.svg';
 import carbsIcon from '../assets/carbs-icon.svg';
 import fatIcon from '../assets/fat-icon.svg';
-import DashboardTitle from './DashboardTitle.js';
+// import DashboardTitle from './DashboardTitle.js';
 import { useState } from 'react';
 import { getUser } from '../api';
 import { useSearchParams } from 'react-router-dom';
@@ -34,11 +34,11 @@ export function fetchUserData() {
 
 function Dashboard() {
   const userData = fetchUserData();
-  console.log(userData);
 
   return (
     <main>
-      <DashboardTitle />
+      {/* <DashboardTitle /> */}
+      <h1 className='dashboard-title'>Bonjour {userData?.userInfos?.firstName || ''}</h1>;
       <p>Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
       <div className='analytics-grid'>
         <DailyActivity />
@@ -49,26 +49,26 @@ function Dashboard() {
           <FoodIndicator
             icon={caloriesIcon}
             title='Calories'
-            value={userData?.keyData?.calorieCount || ''}
+            value={userData?.keyData?.calorieCount + 'kCal' || ''}
             className='calories'
+          />
+          <FoodIndicator
+            icon={proteinsIcon}
+            title='Protéines'
+            value={userData?.keyData?.proteinCount + 'g' || ''}
+            className='proteins'
           />
           <FoodIndicator
             icon={carbsIcon}
             title='Glucides'
-            value={userData?.keyData?.carbohydrateCount || ''}
+            value={userData?.keyData?.carbohydrateCount + 'g' || ''}
             className='carbs'
           />
           <FoodIndicator
             icon={fatIcon}
             title='Lipides'
-            value={userData?.keyData?.lipidCount || ''}
+            value={userData?.keyData?.lipidCount + 'g' || ''}
             className='fat'
-          />
-          <FoodIndicator
-            icon={proteinsIcon}
-            title='Protéines'
-            value={userData?.keyData?.proteinCount || ''}
-            className='proteins'
           />
         </section>
       </div>

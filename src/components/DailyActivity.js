@@ -13,25 +13,11 @@ import { useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-//useEffect garantit que fetchUserActivityData est appelée après le rendu initial du composant
-//et les données seront mises à jour lorsque la requête asynchrone sera résolue.
 export function fetchUserActivity() {
   const [searchParams] = useSearchParams();
   const userId = parseInt(searchParams.get('user') || 12, 10); //If no user ID is specified, default to 12. 10: base 10 system
 
   const [userActivityData, setUserActivityData] = useState(null);
-
-  // useEffect(() => {
-  //   const fetchUserActivityData = async () => {
-  //     try {
-  //       const user = await getUserActivity(userId);
-  //       setUserActivityData(user);
-  //     } catch (error) {
-  //       console.error('Error fetching user data:', error);
-  //     }
-  //   };
-  //   fetchUserActivityData();
-  // }, [userId]);
 
   const fetchUserActivityData = async () => {
     try {
@@ -43,9 +29,9 @@ export function fetchUserActivity() {
   };
   fetchUserActivityData();
 
-  console.log(userActivityData);
   return userActivityData;
 }
+
 function DailyActivity() {
   const userActivity = fetchUserActivity();
 
@@ -68,8 +54,6 @@ function DailyActivity() {
       {value}
     </span>
   );
-
-  console.log(data);
 
   return (
     <div className='daily-activity'>
@@ -108,8 +92,6 @@ function DailyActivity() {
             }}
           />
           <Tooltip content={<CustomToolTip />} cursor={{ fill: 'rgba(196, 196, 196, 0.5)' }} />
-
-          {/* <Tooltip content={<CustomTtip />} wrapperStyle={{ outline: 0 }} /> */}
 
           <CartesianGrid stroke='rgba(222, 222, 222, 1)' strokeDasharray='3 3' vertical={false} />
           <Legend
@@ -158,11 +140,11 @@ const CustomToolTip = ({ active, payload }) => {
 };
 
 CustomToolTip.propTypes = {
-  active: PropTypes.bool, // Valider que 'active' est un booléen
+  active: PropTypes.bool,
   payload: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.number, // Valider que 'value' est un nombre
-      name: PropTypes.string, // Valider que 'name' est une chaîne de caractères
+      value: PropTypes.number,
+      name: PropTypes.string,
     }),
   ),
 };

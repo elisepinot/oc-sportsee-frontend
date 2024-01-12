@@ -1,9 +1,6 @@
 import { fetchUserData } from './dashboard';
-// import { PureComponent } from 'react';
 import { PieChart, Pie, ResponsiveContainer, Cell } from 'recharts';
-// import '../styles/components/score.scss';
 
-// Sector, Cell,
 function Score() {
   const userData = fetchUserData();
   const userScore = userData?.score || userData?.todayScore;
