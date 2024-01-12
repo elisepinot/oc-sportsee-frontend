@@ -1,0 +1,28 @@
+.food-indicator {
+  background-color: rgba(251, 251, 251, 1);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.0212);
+  &-icon-container {
+    width: 60px;
+    height: 60px;
+    margin: 32px;
+    & img {
+      width: 100%;
+    }
+  }
+  & .text-content {
+    margin-right: 32px;
+  }
+
+  & .indicator-value {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  & .indicator-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(116, 121, 140, 1);
+  }
+}

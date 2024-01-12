@@ -1,0 +1,57 @@
+.dashboard-title {
+  font-size: 48px;
+  font-weight: 500;
+}
+
+.analytics-grid {
+  width: 100%;
+  display: grid;
+  // grid-template-columns: repeat(4, 258px);
+  grid-template-columns: repeat(4, 1fr);
+  // grid-template-rows: 320px 1fr;
+  grid-template-rows: 320px 263px;
+
+  // gap: 32px;
+  gap: 2rem;
+  margin-top: 72px;
+}
+
+.daily-activity,
+.diagram,
+.score {
+  background: rgba(251, 251, 251, 1);
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.0212);
+  border-radius: 5px;
+}
+
+.daily-activity {
+  grid-column: 1 / 4;
+  grid-row: 1 / 2;
+}
+
+// .average-length,
+// .diagram,
+// .score {
+//   aspect-ratio: 1 / 1;
+// }
+
+.average-length {
+  grid-column: 1/2;
+  grid-row: 2 / 3;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.0212);
+  border-radius: 5px;
+}
+
+.diagram {
+  grid-column: 2/3;
+  grid-row: 2 / 3;
+  background-color: rgba(40, 45, 48, 1);
+}
+
+.food-indicators {
+  grid-column: 4 / 5;
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

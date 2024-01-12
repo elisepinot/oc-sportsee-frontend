@@ -1,0 +1,28 @@
+.top-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  min-width: fit-content;
+  background-color: black;
+  height: 88px;
+  & nav {
+    width: 75%;
+    & ul {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      text-decoration: none;
+      list-style: none;
+      // column-gap: 224px;
+      margin: 0 88px;
+      & li {
+        color: white;
+        font-size: 24px;
+        font-weight: 500;
+        cursor: pointer;
+      }
+    }
+  }
+}
