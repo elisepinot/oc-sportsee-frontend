@@ -1,8 +1,8 @@
-import { fetchUserData } from './dashboard';
+import { useFetchUserData } from './dashboard';
 import { PieChart, Pie, ResponsiveContainer, Cell } from 'recharts';
 
 function Score() {
-  const userData = fetchUserData();
+  const userData = useFetchUserData();
   const userScore = userData?.score || userData?.todayScore;
   const data = [
     { name: 'Score', value: userScore * 100 },

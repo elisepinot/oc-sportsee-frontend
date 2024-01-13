@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 // import PropTypes from 'prop-types';
 import { RadarChart, PolarAngleAxis, PolarGrid, Text, Radar, ResponsiveContainer } from 'recharts';
-function fetchUserPerformance() {
+function useFetchUserPerformance() {
   const [searchParams] = useSearchParams();
   const userId = parseInt(searchParams.get('user') || 12, 10); //If no user ID is specified, default to 12. 10: base 10 system
 
@@ -23,7 +23,7 @@ function fetchUserPerformance() {
 }
 
 function Diagram() {
-  const userPerformance = fetchUserPerformance();
+  const userPerformance = useFetchUserPerformance();
 
   if (userPerformance === null) {
     // Les données ne sont pas encore chargées
@@ -54,7 +54,7 @@ function Diagram() {
   // Customization of labels: add a space between each label and the chart + change the font size
   function customedLabels({ payload, x, y, cx, cy, ...rest }) {
     const customStyle = {
-      fontSize: 12, // Ajoutez ici d'autres propriétés de style personnalisées
+      fontSize: 12,
     };
     return (
       <Text

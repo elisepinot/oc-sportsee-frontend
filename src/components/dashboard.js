@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { getUser } from '../api';
 import { useSearchParams } from 'react-router-dom';
 
-export function fetchUserData() {
+export function useFetchUserData() {
   const [searchParams] = useSearchParams();
   const userId = parseInt(searchParams.get('user') || 12, 10); //If no user ID is specified, default to 12. 10: base 10 system
 
@@ -33,12 +33,12 @@ export function fetchUserData() {
 }
 
 function Dashboard() {
-  const userData = fetchUserData();
+  const userData = useFetchUserData();
 
   return (
     <main>
       {/* <DashboardTitle /> */}
-      <h1 className='dashboard-title'>Bonjour {userData?.userInfos?.firstName || ''}</h1>;
+      <h1 className='dashboard-title'>Bonjour {userData?.userInfos?.firstName || ''}</h1>
       <p>Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
       <div className='analytics-grid'>
         <DailyActivity />

@@ -10,10 +10,10 @@ async function getUser(userId) {
       const mockUsers = mockData.user_main_data;
       const user = mockUsers.find((u) => u.id === userId);
       return user;
-    } else {
-      const response = await axios.get(`${apiUrl}/user/${userId}`);
-      return response.data;
     }
+    const response = await axios.get(`${apiUrl}/user/${userId}`);
+    const apiUserData = response.data.data;
+    return apiUserData;
   } catch (error) {
     throw new Error('Error fetching user data', error);
   }
@@ -24,10 +24,10 @@ async function getUserActivity(userId) {
       const mockActivity = mockData.user_activity;
       const userActivity = mockActivity.find((activity) => activity.userId === userId);
       return userActivity;
-    } else {
-      const response = await axios.get(`${apiUrl}/user/${userId}/activity`);
-      return response.data;
     }
+    const response = await axios.get(`${apiUrl}/user/${userId}/activity`);
+    const apiUserData = response.data.data;
+    return apiUserData;
   } catch (error) {
     throw new Error('Error fetching user activity data', error);
   }
@@ -39,10 +39,10 @@ async function getAverageSessions(userId) {
       const mockAverageSessions = mockData.user_average_sessions;
       const averageSessions = mockAverageSessions.find((sessions) => sessions.userId === userId);
       return averageSessions;
-    } else {
-      const response = await axios.get(`${apiUrl}/user/${userId}/average-sessions`);
-      return response.data;
     }
+    const response = await axios.get(`${apiUrl}/user/${userId}/average-sessions`);
+    const apiUserData = response.data.data;
+    return apiUserData;
   } catch (error) {
     throw new Error('Error fetching average sessions data', error);
   }
@@ -54,10 +54,10 @@ async function getUserPerformance(userId) {
       const mockPerformance = mockData.user_performance;
       const userPerformance = mockPerformance.find((performance) => performance.userId === userId);
       return userPerformance;
-    } else {
-      const response = await axios.get(`${apiUrl}/user/${userId}/performance`);
-      return response.data;
     }
+    const response = await axios.get(`${apiUrl}/user/${userId}/performance`);
+    const apiUserData = response.data.data;
+    return apiUserData;
   } catch (error) {
     throw new Error('Error fetching user performance data', error);
   }

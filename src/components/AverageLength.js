@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import PropTypes from 'prop-types';
 
-export function fetchAverageSessions() {
-  const [searchParams] = useSearchParams();
+export function useFetchAverageSessions() {
+  const [searchParams] = useSearchParams(); //C'est un hook: c'est comme un composant, mais il fait uniquement de la logique
+
   const userId = parseInt(searchParams.get('user') || 12, 10); //If no user ID is specified, default to 12. 10: base 10 system
 
   const [averageSessionsData, setaverageSessionsData] = useState(null);
@@ -23,7 +24,7 @@ export function fetchAverageSessions() {
   return averageSessionsData;
 }
 function AverageLength() {
-  const averageSessions = fetchAverageSessions();
+  const averageSessions = useFetchAverageSessions();
 
   if (averageSessions === null) {
     // Les données ne sont pas encore chargées
