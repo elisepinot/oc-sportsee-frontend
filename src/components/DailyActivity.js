@@ -13,7 +13,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-export function fetchUserActivity() {
+export function useFetchUserActivity() {
   const [searchParams] = useSearchParams();
   const userId = parseInt(searchParams.get('user') || 12, 10); //If no user ID is specified, default to 12. 10: base 10 system
 
@@ -33,7 +33,7 @@ export function fetchUserActivity() {
 }
 
 function DailyActivity() {
-  const userActivity = fetchUserActivity();
+  const userActivity = useFetchUserActivity();
 
   if (userActivity === null) {
     // Les données ne sont pas encore chargées

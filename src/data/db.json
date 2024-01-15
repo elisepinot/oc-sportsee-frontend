@@ -1,7 +1,7 @@
 {
   "user_main_data": [
     {
-      "id": 13,
+      "id": 12,
       "userInfos": {
         "firstName": "Karl",
         "lastName": "Dovineau",
@@ -16,7 +16,7 @@
       }
     },
     {
-      "id": 18,
+      "id": 20,
       "userInfos": {
         "firstName": "Cecilia",
         "lastName": "Ratorez",
@@ -33,7 +33,7 @@
   ],
   "user_activity": [
     {
-      "userId": 13,
+      "userId": 12,
       "sessions": [
         {
           "day": "2020-07-01",
@@ -73,7 +73,7 @@
       ]
     },
     {
-      "userId": 18,
+      "userId": 20,
       "sessions": [
         {
           "day": "2020-07-01",
@@ -115,7 +115,7 @@
   ],
   "user_average_sessions": [
     {
-      "userId": 13,
+      "userId": 12,
       "sessions": [
         {
           "day": 1,
@@ -148,7 +148,7 @@
       ]
     },
     {
-      "userId": 18,
+      "userId": 20,
       "sessions": [
         {
           "day": 1,
@@ -183,7 +183,7 @@
   ],
   "user_performance": [
     {
-      "userId": 13,
+      "userId": 12,
       "kind": {
         "1": "cardio",
         "2": "energy",
@@ -220,7 +220,7 @@
       ]
     },
     {
-      "userId": 18,
+      "userId": 20,
       "kind": {
         "1": "cardio",
         "2": "energy",

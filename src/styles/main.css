@@ -535,6 +535,10 @@ text {
   opacity: 50.4%;
 }
 
+.custom-cursor {
+  opacity: 0.3;
+}
+
 .recharts-polar-angle-axis-tick-value {
   transform: translatex(-3rem);
 }

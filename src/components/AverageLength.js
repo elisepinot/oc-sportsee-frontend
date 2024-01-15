@@ -1,7 +1,7 @@
 import { getAverageSessions } from '../api';
 import { useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import PropTypes from 'prop-types';
 
 export function useFetchAverageSessions() {
@@ -27,7 +27,6 @@ function AverageLength() {
   const averageSessions = useFetchAverageSessions();
 
   if (averageSessions === null) {
-    // Les données ne sont pas encore chargées
     return <div>Loading...</div>;
   }
 
@@ -43,24 +42,33 @@ function AverageLength() {
     sessionLength: session.sessionLength,
   }));
 
-  const CustomToolTip = ({ active, payload }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className='tooltipAverage'>
-          <p>{payload[0].value + ' min'}</p>
-        </div>
-      );
-    }
-    return null;
-  };
+  function CustomCursor(props) {
+    // Destructuration des propriétés 'points' et 'width' depuis les props.
+    const { points, width } = props;
+    // Destructuration des coordonnées 'x' et 'y' depuis le premier point dans 'points'.
+    const { x, y } = points[0];
+    // Retourne un composant Rectangle (un rectangle représentant un curseur personnalisé).
+    return (
+      <Rectangle
+        fill='#000'
+        stroke='#000'
+        x={x} // Position horizontale du coin supérieur gauche du rectangle.
+        y={y} // Position verticale du coin supérieur gauche du rectangle.
+        width={width} // Largeur du rectangle.
+        height={200} // Hauteur du rectangle.
+        className='custom-cursor'
+      />
+    );
+  }
 
-  CustomToolTip.propTypes = {
-    active: PropTypes.bool,
-    payload: PropTypes.arrayOf(
+  CustomCursor.propTypes = {
+    points: PropTypes.arrayOf(
       PropTypes.shape({
-        value: PropTypes.number, // Change le type en fonction du type de valeur que vous attendez
+        x: PropTypes.number,
+        y: PropTypes.number,
       }),
     ),
+    width: PropTypes.number,
   };
 
   return (
@@ -83,7 +91,37 @@ function AverageLength() {
             }}
           />
           <YAxis dataKey='sessionLength' hide={true} domain={['dataMin-10', 'dataMax+10']} />
-          <Tooltip content={<CustomToolTip />} cursor={false} />
+          <Tooltip
+            // Décalage du tooltip par rapport au point de données
+            offset={10}
+            // Style du contenu du tooltip
+            contentStyle={{
+              backgroundColor: '#fff',
+              border: 'none',
+              textAlign: 'center',
+            }}
+            // Style du conteneur du tooltip
+            wrapperStyle={{
+              outline: 'none',
+            }}
+            // Style des éléments du tooltip (par exemple, ligne de données)
+            itemStyle={{
+              fontSize: '12px',
+              fontWeight: '500',
+              color: '#000',
+              lineHeight: '0',
+              opacity: 0.5,
+            }}
+            // Fonction de formatage de l'étiquette du tooltip (vide dans ce cas)
+            labelFormatter={() => ''}
+            // Séparateur entre l'étiquette et la valeur dans le tooltip
+            separator=''
+            // Fonction de formatage de la valeur dans le tooltip
+            formatter={(value) => [`${value} min`, '']}
+            // Curseur personnalisé pour le tooltip
+            cursor={<CustomCursor />}
+          />
+
           <Line
             type='natural'
             dataKey='sessionLength'
