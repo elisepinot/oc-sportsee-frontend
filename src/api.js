@@ -2,7 +2,7 @@ import axios from 'axios';
 import mockData from './data/db.json';
 
 const apiUrl = 'http://localhost:3000';
-const useMockData = false; //If "true", mocked data will be used. Otherwise, real data (from API) will be used.
+const useMockData = true; //If "true", mocked data will be used. Otherwise, real data (from API) will be used.
 
 async function getUser(userId) {
   try {
