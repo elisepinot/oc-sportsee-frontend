@@ -24,42 +24,45 @@ export function useFetchAverageSessions() {
   return averageSessionsData;
 }
 function AverageLength() {
+  // Use of custom hook useFetchAverageSessions to get average sessions data
   const averageSessions = useFetchAverageSessions();
 
   if (averageSessions === null) {
     return <div>Loading...</div>;
   }
 
+  // Extract of sessions data from the custom hook
   const data = averageSessions.sessions;
 
   const daysOfWeek = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 
+  // Data formatting to adapt it to the graph
   const formattedData = data.map((session, index) => ({
-    // Pour chaque élément dans averageSessions, crée un nouvel objet avec les propriétés suivantes :
-    // La propriété 'name' est définie comme le jour de la semaine correspondant.
+    // For each element of data,  a new object is created with the properties 'day' and 'sessionLength'.
     day: daysOfWeek[index],
-    // La propriété 'sessionLength' est définie comme la longueur de session du jour.
     sessionLength: session.sessionLength,
   }));
 
-  function CustomCursor(props) {
-    // Destructuration des propriétés 'points' et 'width' depuis les props.
-    const { points, width } = props;
-    // Destructuration des coordonnées 'x' et 'y' depuis le premier point dans 'points'.
-    const { x, y } = points[0];
-    // Retourne un composant Rectangle (un rectangle représentant un curseur personnalisé).
-    return (
-      <Rectangle
-        fill='#000'
-        stroke='#000'
-        x={x} // Position horizontale du coin supérieur gauche du rectangle.
-        y={y} // Position verticale du coin supérieur gauche du rectangle.
-        width={width} // Largeur du rectangle.
-        height={200} // Hauteur du rectangle.
-        className='custom-cursor'
-      />
-    );
-  }
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className='session-tooltip'>
+          <p className='session-tooltip-min'>{`${payload[0].value} min`}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  CustomTooltip.propTypes = {
+    active: PropTypes.bool,
+    payload: PropTypes.array,
+  };
+
+  //A darker rectangle following the mouse on the chart
+  const CustomCursor = ({ points }) => {
+    return <Rectangle fill='#000000' opacity={0.2} x={points[0].x} width={500} height={300} />;
+  };
 
   CustomCursor.propTypes = {
     points: PropTypes.arrayOf(
@@ -68,7 +71,6 @@ function AverageLength() {
         y: PropTypes.number,
       }),
     ),
-    width: PropTypes.number,
   };
 
   return (
@@ -91,37 +93,7 @@ function AverageLength() {
             }}
           />
           <YAxis dataKey='sessionLength' hide={true} domain={['dataMin-10', 'dataMax+10']} />
-          <Tooltip
-            // Décalage du tooltip par rapport au point de données
-            offset={10}
-            // Style du contenu du tooltip
-            contentStyle={{
-              backgroundColor: '#fff',
-              border: 'none',
-              textAlign: 'center',
-            }}
-            // Style du conteneur du tooltip
-            wrapperStyle={{
-              outline: 'none',
-            }}
-            // Style des éléments du tooltip (par exemple, ligne de données)
-            itemStyle={{
-              fontSize: '12px',
-              fontWeight: '500',
-              color: '#000',
-              lineHeight: '0',
-              opacity: 0.5,
-            }}
-            // Fonction de formatage de l'étiquette du tooltip (vide dans ce cas)
-            labelFormatter={() => ''}
-            // Séparateur entre l'étiquette et la valeur dans le tooltip
-            separator=''
-            // Fonction de formatage de la valeur dans le tooltip
-            formatter={(value) => [`${value} min`, '']}
-            // Curseur personnalisé pour le tooltip
-            cursor={<CustomCursor />}
-          />
-
+          <Tooltip content={<CustomTooltip />} cursor={<CustomCursor />} />
           <Line
             type='natural'
             dataKey='sessionLength'

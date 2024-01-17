@@ -535,8 +535,12 @@ text {
   opacity: 50.4%;
 }
 
-.custom-cursor {
-  opacity: 0.3;
+.session-tooltip {
+  background-color: white;
+  padding: 0.5rem;
+  color: black;
+  font-size: 12px;
+  border-style: none;
 }
 
 .recharts-polar-angle-axis-tick-value {
