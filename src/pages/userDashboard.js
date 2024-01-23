@@ -1,6 +1,7 @@
 import LeftBar from '../components/LeftBar.js';
 import TopBar from '../components/TopBar.js';
 import Dashboard from '../components/dashboard.js';
+
 function UserDashboard() {
   return (
     <div className='App'>
@@ -12,5 +13,4 @@ function UserDashboard() {
     </div>
   );
 }
-
 export default UserDashboard;

@@ -338,6 +338,14 @@ body {
 .content {
   display: flex;
   width: 100%;
+  min-height: 100vh;
+}
+
+.error {
+  color: rgb(255, 0, 0);
+  font-size: 72px;
+  text-align: center;
+  margin: auto;
 }
 
 main {

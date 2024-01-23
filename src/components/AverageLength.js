@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Rectangle } from 'recharts';
 import PropTypes from 'prop-types';
+import { AverageLengthModel } from '../data/modelisation';
 
 export function useFetchAverageSessions() {
   const [searchParams] = useSearchParams(); //C'est un hook: c'est comme un composant, mais il fait uniquement de la logique
@@ -32,16 +33,22 @@ function AverageLength() {
   }
 
   // Extract of sessions data from the custom hook
-  const data = averageSessions.sessions;
+  // const data = averageSessions.sessions;
 
-  const daysOfWeek = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+  // const daysOfWeek = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 
-  // Data formatting to adapt it to the graph
-  const formattedData = data.map((session, index) => ({
-    // For each element of data,  a new object is created with the properties 'day' and 'sessionLength'.
-    day: daysOfWeek[index],
-    sessionLength: session.sessionLength,
-  }));
+  // // Data formatting to adapt it to the graph
+  // const formattedData = data.map((session, index) => ({
+  //   // For each element of data,  a new object is created with the properties 'day' and 'sessionLength'.
+  //   day: daysOfWeek[index],
+  //   sessionLength: session.sessionLength,
+  // }));
+
+  // Créer une instance de la classe de modélisation
+  const model = new AverageLengthModel(averageSessions.sessions);
+
+  // Utiliser la méthode de la classe pour obtenir les données formatées
+  const formattedData = model.getFormattedData();
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {

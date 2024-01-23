@@ -12,6 +12,7 @@ import { getUserActivity } from '../api';
 import { useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { DailyActivityModel } from '../data/modelisation';
 
 export function useFetchUserActivity() {
   const [searchParams] = useSearchParams();
@@ -40,27 +41,54 @@ function DailyActivity() {
     return <div>Loading...</div>;
   }
 
-  const data = userActivity.sessions;
+  // const data = userActivity.sessions;
 
-  //... = opérateur de décomposition. Il est utilisé pour décomposer le tableau résultant de map en une liste d'arguments.
-  //En d'autres termes, ... est utilisé pour dire à JavaScript de traiter chaque élément du tableau comme un argument individuel, plutôt que de passer le tableau entier en tant qu'unique argument.
-  //Par exemple, si le tableau retourné est [69, 70, 81], ça signifie que map doit traiter les éléments 69, 70 et 81 comme des arguments individuels.
-  //C'est une syntaxe concise pour fournir plusieurs arguments à une fonction qui attend une liste d'arguments individuels.
-  const minWeight = Math.min(...data.map((entry) => entry.kilogram)) - 1;
-  const maxWeight = Math.max(...data.map((entry) => entry.kilogram)) + 1;
-  const formatXAxis = (value, index) => index + 1; // Remplace les dates par des nombres. Utilisé avec la propriété tickFormatter sur l'élément XAxis. Recharts s'attend à recevoir une fonction qui sera utilisée pour formater chaque tick sur l'axe des abscisses. Recharts prend soin de l'itération.
+  const model = new DailyActivityModel(userActivity.sessions);
+
+  // Utiliser la méthode de la classe pour obtenir les données formatées
+  const { formattedData, minWeight, maxWeight } = model.getFormattedData();
+
+  // const minWeight = Math.min(...data.map((entry) => entry.kilogram)) - 1;
+  // const maxWeight = Math.max(...data.map((entry) => entry.kilogram)) + 1;
+  const formatXAxis = (value, index) => index + 1;
+  // Remplace les dates par des nombres. Utilisé avec la propriété tickFormatter sur l'élément XAxis. Recharts s'attend à recevoir une fonction qui sera utilisée pour formater chaque tick sur l'axe des abscisses. Recharts prend soin de l'itération.
   const formatLegend = (value, entry) => (
     <span className={`legend-text ${entry.dataKey === 'kilogram' ? 'legend-kilogram' : ''}`}>
       {value}
     </span>
   );
 
+  const CustomToolTip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      const weightValue = payload[0]?.value ?? 0; // Utilisation de la nullish coalescing operator
+      const calorieValue = payload[1]?.value ?? 0;
+
+      return (
+        <div className='tooltipActivity'>
+          <p>{weightValue + 'kg'}</p>
+          <p>{calorieValue + 'kCal'}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
+  CustomToolTip.propTypes = {
+    active: PropTypes.bool,
+    payload: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.number,
+        name: PropTypes.string,
+      }),
+    ),
+  };
+
   return (
     <div className='daily-activity'>
       <h3>Activités quotidiennes</h3>
       <ResponsiveContainer width='100%' height='100%'>
         <BarChart
-          data={data}
+          data={formattedData}
           margin={{ top: 23, bottom: 23, left: 0, right: 0 }}
           barGap={8}
           barSize={7}
@@ -123,30 +151,5 @@ function DailyActivity() {
     </div>
   );
 }
-
-const CustomToolTip = ({ active, payload }) => {
-  if (active && payload && payload.length) {
-    const weightValue = payload[0]?.value ?? 0; // Utilisation de la nullish coalescing operator
-    const calorieValue = payload[1]?.value ?? 0;
-
-    return (
-      <div className='tooltipActivity'>
-        <p>{weightValue + 'kg'}</p>
-        <p>{calorieValue + 'kCal'}</p>
-      </div>
-    );
-  }
-  return null;
-};
-
-CustomToolTip.propTypes = {
-  active: PropTypes.bool,
-  payload: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.number,
-      name: PropTypes.string,
-    }),
-  ),
-};
 
 export default DailyActivity;
